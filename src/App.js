@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchCards from './SearchCards';
-import FoundCards from './FoundCards';
+import FoundCards from './FoundCards'; 
 
 const App = () => {
     return (
