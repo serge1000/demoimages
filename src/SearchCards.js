@@ -1,13 +1,14 @@
 import React from 'react';
 import Card from './Card';
 
-const SearchCards = (state) => { 
-
+const SearchCards = ({searchcards, CardClick, cardnumber, searchlist}) => { 
+console.log('state');
+console.log(searchcards);
     const cardsArray = [];
-    for (let i = 0; i < 3; i++) {
-        const imagedata = state.searchcards[i].imagedata;
-        const robotID = state.searchcards[i].robotID;  
-        cardsArray.push(<Card key={robotID} robotID={robotID} imagedata={imagedata} />);
+    for (let i = 0; i < cardnumber; i++) {
+        const imagedata = searchcards[i].imagedata;
+        const robotID = searchcards[i].robotID;  
+        cardsArray.push(<Card key={robotID} robotID={robotID} imagedata={imagedata} CardClick={CardClick} searchlist={searchlist} />);
     }
 
     return (

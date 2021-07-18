@@ -8,7 +8,8 @@ const api =  axios.create({
 })
 class App extends React.Component {
     state = {
-        searchcards: []
+        searchcards: [],
+        foundcards: []
     }
     
     constructor() {
@@ -19,23 +20,33 @@ class App extends React.Component {
         })
     } 
   
+
+    onCardClick = (robotID) => {
+        console.log('onCardClick robotID='+ robotID);
+        api.get('/getfoundimages').then(res => {
+          this.setState( {foundcards: res.data} );
+      })
+    }
+    onCardClickFake = (robotID) => {
+    }
     render() {
-       
+        console.log(' APPthis.state.searchcards');
+        console.log(this.state.searchcards);       
          return (
-             
+
            <div>
            { this.state.searchcards.length ===3 ?
            ( <div>
               <div className='tc mt5 mb4'>
-                  <h1 >Click on image to find simular ones</h1>
-                  <SearchCards searchcards={this.state.searchcards}/>
+                  <h1 >Click on image to find simular ones</h1> 
+                  <SearchCards searchcards={this.state.searchcards} CardClick={this.onCardClick} cardnumber={3} searchlist={true} />
               </div>
-            {/*   
+ 
               <div>
                   <h1 className='tc mt5 mb4'>Search Results</h1>
-                  <FoundCards /> 
+                  <SearchCards searchcards={this.state.foundcards} CardClick={this.onCardClickFake} cardnumber={this.state.foundcards.length} searchlist={false} />
               </div>
-           */}                
+              
             </div>
            ) : (
             <div>
