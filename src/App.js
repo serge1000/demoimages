@@ -1,11 +1,11 @@
 import React from 'react';
-import SearchCards from './SearchCards';
-//import FoundCards from './FoundCards'; 
+import CardsList from './CardsList';
 import axios from 'axios';
 
 const api =  axios.create({
     baseURL: 'http://localhost:3000/'
 })
+
 class App extends React.Component {
     state = {
         searchcards: [],
@@ -15,23 +15,22 @@ class App extends React.Component {
     constructor() {
         super();
 
-        api.get('/getsearchimages').then(res => {
+        api.get('/gettestimages').then(res => {
             this.setState( {searchcards: res.data } )
         })
     } 
   
-
-    onCardClick = (robotID) => {
-        console.log('onCardClick robotID='+ robotID);
-        api.get('/getfoundimages').then(res => {
+    onCardClick = (imageID) => {
+        api.get('/searchrequest/'+imageID).then(res => {
           this.setState( {foundcards: res.data} );
       })
     }
-    onCardClickFake = (robotID) => {
+
+    onCardClickFake = (imageID) => {
     }
+
     render() {
-        console.log(' APPthis.state.searchcards');
-        console.log(this.state.searchcards);       
+    
          return (
 
            <div>
@@ -39,12 +38,12 @@ class App extends React.Component {
            ( <div>
               <div className='tc mt5 mb4'>
                   <h1 >Click on image to find simular ones</h1> 
-                  <SearchCards searchcards={this.state.searchcards} CardClick={this.onCardClick} cardnumber={3} searchlist={true} />
+                  <CardsList searchcards={this.state.searchcards} CardClick={this.onCardClick} cardnumber={3} searchlist={true} />
               </div>
  
               <div>
                   <h1 className='tc mt5 mb4'>Search Results</h1>
-                  <SearchCards searchcards={this.state.foundcards} CardClick={this.onCardClickFake} cardnumber={this.state.foundcards.length} searchlist={false} />
+                  <CardsList searchcards={this.state.foundcards} CardClick={this.onCardClickFake} cardnumber={this.state.foundcards.length} searchlist={false} />
               </div>
               
             </div>
@@ -56,7 +55,7 @@ class App extends React.Component {
            </div>
 
         );
-          }
+    }
 
 
 }
